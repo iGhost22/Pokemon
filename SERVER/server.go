@@ -11,7 +11,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-
 )
 
 type Client struct {
@@ -490,7 +489,7 @@ func handleAttack(addr *net.UDPAddr, conn *net.UDPConn) {
 	}
 	game, inGame := games[gameKey]
 	if !inGame {
-		sendMessageToClient("You are not already\n(Usage: @play to ready the battle)", addr, conn)
+		sendMessageToClient("You are not ready\n(Usage: @play to ready the battle)", addr, conn)
 		return
 	}
 
@@ -658,13 +657,4 @@ func getDmgNumber(pAtk Pokedex, pRecive Pokedex) (int, int) {
 	}
 	special = float32(pAtk.PokeInfo.SpAtk)*typeDefense - float32(pRecive.PokeInfo.SpDef)
 	return int(normal), int(special)
-}
-func getLevelExp(level int) (int, int) {
-
-	totalExp := (level + 1) * (level + 1) * (level + 1)
-	ExpAtLevel := totalExp - (level * level * level)
-	if level == 1 {
-		ExpAtLevel = totalExp
-	}
-	return totalExp, ExpAtLevel
 }
